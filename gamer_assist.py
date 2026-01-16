@@ -3,8 +3,6 @@ import keyboard
 import mouse
 import find_button
 
-
-
 print("Program active")
 
 while True:
@@ -31,7 +29,9 @@ while True:
             while not button:
                 button = find_button.find_pressed()
                 time.sleep(0.01)
-            if button[0] == 'm' and not len(button) == 1:
+            if button == '`' or button == '\\':
+                print('cancelling')
+            elif button[0] == 'm' and not len(button) == 1:
                 mouseButton = button[1:]
                 mouse.press(button=mouseButton)
                 print(f"holding down {button}")
@@ -74,7 +74,9 @@ while True:
             while not button:
                 button = find_button.find_pressed()
                 time.sleep(0.01)
-            if button[0] == 'm' and not len(button) == 1:
+            if button == '`' or button == '\\':
+                print('cancelling')
+            elif button[0] == 'm' and not len(button) == 1:
                 mouseButton = button[1:]
                 print(f"mashing {button}")
                 while not keyboard.is_pressed('\\'):
@@ -87,10 +89,11 @@ while True:
                     time.sleep(0.01)
             else:
                 print(f"mashing {button}")
-                while not keyboard.is_pressed('\\'):
+                while not mouse.is_pressed('middle'):
                     keyboard.press(button)
                     time.sleep(0.001)
                     keyboard.release(button)
+                    time.sleep(0.001)
                 print(f"stopping mash {button}")
                 while keyboard.is_pressed('\\'):
                     time.sleep(0.01)
