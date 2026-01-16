@@ -1,4 +1,3 @@
-import pyautogui
 import time
 import keyboard
 import mouse
@@ -13,35 +12,84 @@ while True:
     if keyboard.is_pressed('`'):
         beforeHold = time.time()
         while keyboard.is_pressed('`'):
-            time.sleep(0.05)
+            time.sleep(0.01)
         afterHold = time.time()
         timed = afterHold - beforeHold
 
         if timed < 0.4:
-            pyautogui.keyDown('w')
+            keyboard.press('w')
             print("holding down w")
-            while not keyboard.is_pressed('`') or keyboard.is_pressed('w'):
-                time.sleep(0.05)
-            pyautogui.keyUp('w')
+            while not keyboard.is_pressed('`'):
+                time.sleep(0.01)
+            keyboard.release('w')
             print("releasing w")
+            while keyboard.is_pressed('`'):
+                time.sleep(0.01)
         else:
+            print('confirm button to mash')
             button = ''
             while not button:
                 button = find_button.find_pressed()
-                time.sleep(0.05)
+                time.sleep(0.01)
             if button[0] == 'm' and not len(button) == 1:
                 mouseButton = button[1:]
-                pyautogui.mouseDown(button=mouseButton)
+                mouse.press(button=mouseButton)
                 print(f"holding down {button}")
-                while not keyboard.is_pressed('`') or mouse.is_pressed(mouseButton):
-                    time.sleep(0.05)
-                pyautogui.mouseUp(button=mouseButton)
+                while not keyboard.is_pressed('`'):
+                    time.sleep(0.01)
+                mouse.release(button=mouseButton)
                 print(f"releasing {button}")
+                while keyboard.is_pressed('`'):
+                    time.sleep(0.01)
             else:
-                pyautogui.keyDown(button)
+                keyboard.press(button)
                 print(f"holding down {button}")
-                while not keyboard.is_pressed('`') or keyboard.is_pressed(button):
-                    time.sleep(0.05)
-                pyautogui.keyUp(button)
+                while not keyboard.is_pressed('`'):
+                    time.sleep(0.01)
+                keyboard.release(button)
                 print(f"releasing {button}")
-    time.sleep(0.05)
+                while not keyboard.is_pressed('`'):
+                    time.sleep(0.01)
+    #Auto masher
+    if keyboard.is_pressed('\\'):
+        beforeHold = time.time()
+        while keyboard.is_pressed('\\'):
+            time.sleep(0.01)
+        afterHold = time.time()
+        timed = afterHold - beforeHold
+
+        if timed < 1:
+            print("mashing mleft")
+            while not keyboard.is_pressed('\\'):
+                mouse.press(button='left')
+                time.sleep(0.001)
+                mouse.release(button='left')
+            print("stopping mash mleft")
+            while keyboard.is_pressed('\\'):
+                time.sleep(0.01)
+        else:
+            print('confirm button to mash')
+            button = ''
+            while not button:
+                button = find_button.find_pressed()
+                time.sleep(0.01)
+            if button[0] == 'm' and not len(button) == 1:
+                mouseButton = button[1:]
+                print(f"mashing {button}")
+                while not keyboard.is_pressed('\\'):
+                    mouse.press(button=mouseButton)
+                    time.sleep(0.001)
+                    mouse.release(button=mouseButton)
+                print(f"stopping mash {button}")
+                while keyboard.is_pressed('\\'):
+                    time.sleep(0.01)
+            else:
+                print(f"mashing {button}")
+                while not keyboard.is_pressed('\\'):
+                    keyboard.press(button)
+                    time.sleep(0.001)
+                    keyboard.release(button)
+                print(f"stopping mash {button}")
+                while keyboard.is_pressed('\\'):
+                    time.sleep(0.01)
+    time.sleep(0.01)
