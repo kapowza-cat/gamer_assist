@@ -58,12 +58,13 @@ while True:
         afterHold = time.time()
         timed = afterHold - beforeHold
 
-        if timed < 1:
+        if timed < 0.4:
             print("mashing mleft")
             while not keyboard.is_pressed('\\'):
                 mouse.press(button='left')
                 time.sleep(0.001)
                 mouse.release(button='left')
+                time.sleep(0.001)
             print("stopping mash mleft")
             while keyboard.is_pressed('\\'):
                 time.sleep(0.01)
@@ -80,6 +81,7 @@ while True:
                     mouse.press(button=mouseButton)
                     time.sleep(0.001)
                     mouse.release(button=mouseButton)
+                    time.sleep(0.001)
                 print(f"stopping mash {button}")
                 while keyboard.is_pressed('\\'):
                     time.sleep(0.01)
